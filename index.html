@@ -281,25 +281,11 @@ Split({
 })
 
 
-const btn = document.getElementById('btn')
-const filePathElement = document.getElementById('filePath')
-
-btn.addEventListener('click', async () => {
-  const filePath = await window.electronAPI.openFile()
-  console.log(filePath)
-  filePathElement.innerText = filePath
-})
 
 // global state store with nanostores.
 // pin.addEventListener('click', () => {
 //   document.querySelector('.grid').style = "grid-template-columns: auto 2px 100px;"
 // })
-
-
-
-console.log("hi", window.api)
-// ipcRenderer.invoke('get-files')
-console.log("hi ipcrednere-after")
 
 
   document.body.onkeyup = function (e) {

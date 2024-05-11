@@ -28,6 +28,7 @@
 
 // import './index.css';
 import { persistentAtom } from '@nanostores/persistent'
+import { read, readFile } from 'original-fs'
 type SidePaneStateValue = 'open' | 'closed'
 
 const $loadingState = persistentAtom<SidePaneStateValue>('open')
@@ -48,6 +49,46 @@ function move(){
 
  
 }
+
+
+const btn = document.getElementById('btn')
+const filePathElement = document.getElementById('filePath')
+
+btn.addEventListener('click', async () => {
+
+// state mangagment, need to reset innerHTML
+filePathElement.innerHTML = ""
+
+
+  const [allPaths, filePath] = await window.electronAPI.openFile()
+//   console.log(filePath)
+  
+    allPaths.forEach(async (path) =>{
+
+    if (path[0] == true){
+        filePathElement.innerHTML += "Directory " + path[1] + "\n"
+        }
+    else{
+
+        console.log(await window.electronAPI.readFile(`${filePath}/${path[1]}`))
+
+        // button click trigger file change
+        // that will be used to render the file in the editor
+        filePathElement.innerHTML += `<button>${path[1]}</button>`
+    }
+    // filePathElement.innerText += path[0] + "\n" + path[1] + "\n"
+
+
+  });
+})
+
+// let elementsArray = document.querySelectorAll("whatever");
+
+// elementsArray.forEach(function(elem) {
+//     elem.addEventListener("input", function() {
+//         // This function does stuff
+//     });
+// });
 
 
 let lastClick = 0;
