@@ -28,10 +28,29 @@
 
 // import './index.css';
 import { persistentAtom } from '@nanostores/persistent'
-import { read, readFile } from 'original-fs'
 type SidePaneStateValue = 'open' | 'closed'
 
-const $loadingState = persistentAtom<SidePaneStateValue>('open')
+const $sidePaneState = persistentAtom<SidePaneStateValue>('open')
+
+
+const pin = document.querySelector<HTMLDivElement>('#pin')
+// console.log(pin)
+// global state store with nanostores.
+pin.addEventListener('click', () => {
+    $sidePaneState.set($sidePaneState.value === 'open' ? 'closed' : 'open')
+    // console.log("clicked")
+    // console.log(document.querySelector<HTMLDivElement>('.grid').style.gridTemplateAreas)
+    // document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = "auto 2px 100px"
+})
+
+$sidePaneState.subscribe((value, oldValue) => {
+    if (value === 'open') {
+        document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = "auto 2px 200px"
+    } else {
+        document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = "auto 2px 0px"
+    }
+})
+
 // console.log($loadingState)
 
   
@@ -74,6 +93,7 @@ filePathElement.innerHTML = ""
 
         // button click trigger file change
         // that will be used to render the file in the editor
+        // and we pull which button triggered it from the event.
         filePathElement.innerHTML += `<button>${path[1]}</button>`
     }
     // filePathElement.innerText += path[0] + "\n" + path[1] + "\n"
@@ -108,14 +128,7 @@ gutterdrag.addEventListener('mousedown', (e) => {
   console.log('click');
 });
 
-const pin = document.querySelector<HTMLDivElement>('#pin')
-console.log(pin)
-// global state store with nanostores.
-pin.addEventListener('click', () => {
-    console.log("clicked")
-    console.log(document.querySelector<HTMLDivElement>('.grid').style.gridTemplateAreas)
-    document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = "auto 2px 100px"
-})
+
 
 
 // gutterdrag.addEventListener('dblclick', () => {
