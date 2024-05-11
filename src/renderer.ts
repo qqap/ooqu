@@ -47,7 +47,7 @@ $sidePaneState.subscribe((value, oldValue) => {
     if (value === 'open') {
         document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = "auto 2px 200px"
     } else {
-        document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = "auto 2px 0px"
+        document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = "auto 0px 0px"
     }
 })
 
