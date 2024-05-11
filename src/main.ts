@@ -15,7 +15,7 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js'),
     },
     titleBarStyle: 'customButtonsOnHover',
-    trafficLightPosition: { x: 20, y: 20 },
+    trafficLightPosition: { x: 20, y: 18 },
     backgroundColor: '#4f6e53'
   });
 
