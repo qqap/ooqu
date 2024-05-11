@@ -26,6 +26,11 @@
  * ```
  */
 
-import './index.css';
+// import './index.css';
+import { persistentAtom } from '@nanostores/persistent'
+type LoadingStateValue = 'empty' | 'loading' | 'loaded'
+
+const $loadingState = persistentAtom<LoadingStateValue>('empty')
+console.log($loadingState)
 
 console.log('👋 This message is being logged by "renderer.ts", included via Vite');

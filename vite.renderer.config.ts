@@ -8,6 +8,7 @@ export default defineConfig((env) => {
   const { root, mode, forgeConfigSelf } = forgeEnv;
   const name = forgeConfigSelf.name ?? '';
 
+  console.log('renderer config', forgeEnv, name, root, mode, forgeConfigSelf)
   return {
     root,
     mode,

@@ -1,0 +1,35 @@
+node_modules/
+tmp/
+.DS_Store
+.rpt2_cache
+cache/
+.vscode/
+
+*.d.ts
+!src/**/*.d.ts
+
+*.js.map
+
+*.js
+!demo/**/*.js
+!docs/**/*.js
+!dev/**/*.js
+!test/**/*.js
+!rollup.config.js
+
+*.css
+!demo/**/*.css
+!docs/**/*.css
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Auto Generated Docs. See dev/docgen/index.ts
+docs/options-for-addons.md
+docs/powerpacks.md
+
+# Auto Generated Files. See dev/pre-build.js
+src/everything.ts

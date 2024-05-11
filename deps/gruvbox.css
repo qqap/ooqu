@@ -1,0 +1,60 @@
+/*
+
+    Name:       gruvbox-dark
+    Author:     kRkk (https://github.com/krkk)
+
+    Original gruvbox color scheme by Pavel Pertsev (https://github.com/morhetz/gruvbox)
+
+*/
+
+.cm-formatting-code-block {color: #9e9d9e; }
+/* .HyperMD-codeblock { background-color: #c4c4c4 !important; color: #d0c3ac !important; } */
+.HyperMD-codeblock-begin, .HyperMD-codeblock-end { background-color: transparent !important; }
+
+ /* .cm-header { color: #586e75 !important; } */
+ .cm-quote { color: #93a1a1 !important; }
+
+ .cm-keyword { color: #cb4b16 !important; }
+ .cm-atom { color: #68456d !important; }
+ .cm-number { color: #417d8d !important; }
+ .cm-def { color: #2aa198 !important; }
+
+ .cm-variable { color: #3d4041 !important; }
+ .cm-variable-2 { color: #b58900 !important; }
+ .cm-variable-3,  .cm-type { color: #6c71c4 !important; }
+
+ .cm-property { color: #2aa198 !important; }
+ .cm-operator { color: #6c71c4 !important; }
+
+ .cm-comment { color: #586e75 !important; font-style:italic; }
+
+ .cm-string { color: #859900 !important; }
+ .cm-string-2 { color: #b58900 !important; }
+ .cm-strong { color: #cb4b16 !important; }
+ .cm-strikethrough { color: #9d9696 !important; }
+
+ .cm-meta { color: #859900 !important; }
+ .cm-qualifier { color: #b58900 !important; }
+ .cm-builtin { color: #335657 !important; }
+ .cm-bracket { color: #cb4b16 !important; }
+ .CodeMirror-matchingbracket { color: #859900 !important; }
+ .CodeMirror-nonmatchingbracket { color: #dc322f !important; }
+ .cm-tag { color: #93a1a1 !important; }
+ .cm-attribute { color: #2aa198 !important; }
+ .cm-hr {
+  color: transparent !important;
+  border-top: 1px solid #586e75;
+  display: block;
+}
+ .cm-link { color: #93a1a1 !important; cursor: pointer; }
+ .cm-special { color: #6c71c4 !important; }
+ .cm-em {
+  color: #2aa198 !important;
+  /* text-decoration: underline; */
+  /* text-decoration-style: dotted; */
+}
+ .cm-error,
+ .cm-invalidchar {
+  color: #586e75 !important;
+  border-bottom: 1px dotted #dc322f !important;
+}

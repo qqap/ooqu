@@ -37,6 +37,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "@nanostores/persistent": "^0.10.1",
+    "electron-squirrel-startup": "^1.0.0",
+    "nanostores": "^0.10.3"
   }
 }

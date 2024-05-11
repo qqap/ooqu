@@ -1,13 +1,313 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hello World!</title>
 
-  </head>
-  <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
-    <script type="module" src="/src/renderer.ts"></script>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Ponderings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<style>
+
+.grid {
+  transition: 300ms;
+  /* animation-delay: 2s; */
+
+
+    display: grid;
+    grid-template-columns: auto 4px 200px ; /* need to make this offset disappear later */
+
+
+}
+
+/* also need proper button for 
+maybe when started typing in the flow, the sidepanel disappears, and then when taking a break
+it reappears, and then when typing again, it disappears
+
+*/
+
+
+/* the hover is brief, then it isn't --add a pin for the sidepanel, uneditable name top right, weeds on left
+
+need to do js mouse down event, and then disable, transition, then mouse up */
+.grid:has(.gutter-col-1:active) {
+  transition: 0s !important;
+  background-color: blueviolet;
+
+  /* grid-template-columns: auto 2px 100px !important; */
+}
+
+/* #pane:hover {
+  display: none;
+} */
+
+.gutter-col {
+    grid-row: 1/-1;
+    cursor: col-resize;
+    -webkit-app-region: none;
+}
+
+.gutter-col-1 {
+    grid-column: 2;
+}
+
+flex {
+    display: flex;
+}
+
+html {
+  /* background-color: #181a1b; */
+  -webkit-app-region: drag;
+  padding: 12px;
+
+  background: linear-gradient(to bottom right, #466b75, #467141);
+}
+
+body {
+  margin: 0;
+}
+
+noteditor {
+  height: calc(100vh - 24px); /* There needs to be a better way to do this*/
+
+  /*height: calc(100vh - 24px - 24px);  There needs to be a better way to do this*/
+  /* width: 20%; */
+
+   
+   /* height:max-content;
+   position:fixed; */
+   /* box-sizing: border-box; */
+   border-radius: 6px;
+
+
+  /* margin: 0; */
+  /* margin-right: 200px; */
+  padding-left: 12px;
+  /* padding-top: 24px; */
+  -webkit-app-region: none;
+  background-color: #f8f5eb;
+  /* background-color: #ede8d6; */
+
+
+  /* padding-bottom: 4rem; */
+}
+
+@font-face {
+    font-family: Nightingale;
+    src: url(deps/DTNightingale-Light.ttf);
+}
+
+h1 {
+    font-family: Nightingale;
+    color: black;
+    /* padding-left: 32px; */
+    /* margin-bottom: 0; */
+}
+
+h5 {
+  font-family: Nightingale;
+  color: white;
+  margin-top: 0;
+    /* margin-bottom: 0.5; */
+}
+
+.click {
+      border-radius: 0.5rem;
+      opacity: 0.5;
+
+}
+
+.click:hover {
+  opacity: 0.8;
+  background-color: rgba(118, 118, 118, 0.11);
+  cursor: default;
+}
+
+#save {
+        image-rendering: optimizeSpeed;             /* STOP SMOOTHING, GIVE ME SPEED  */
+        image-rendering: -moz-crisp-edges;          /* Firefox                        */
+        image-rendering: -o-crisp-edges;            /* Opera                          */
+        image-rendering: -webkit-optimize-contrast; /* Chrome (and eventually Safari) */
+        image-rendering: pixelated;                 /* Universal support since 2021   */
+        image-rendering: optimize-contrast;         /* CSS3 Proposed                  */
+        -ms-interpolation-mode: nearest-neighbor;   /* IE8+                           */
+        padding: 0.2rem;
+        margin: 0.5rem;
+        /* margin-left: auto;
+        display: block; */
+  
+    }
+/* body {
+  height: auto;
+  background-image: none;
+} */
+
+</style>
+
+
+<script src="./deps/splitgrid.js"></script>
+<script>
+
+
+  function saveFile(){
+    var bb = new Blob([editor.getValue() ], { type: 'text/plain' });
+    var a = document.createElement('a');
+    a.download = 'ponderings.md';
+    a.href = window.URL.createObjectURL(bb);
+    a.click();
+  }
+
+</script>
+
+<div class="grid">
+
+  <noteditor id="editor"><body>
+    <div style="height: 24px; display: flex; justify-content: end; padding-right: 10px;">
+      <span id="pin">hi</span>
+    </div>
+    
+   
+
+ 
+    
+<!--     
+    <div style="display: flex; align-items: flex-end; justify-content: end;-webkit-app-region: drag; ">
+      Ponderings
+       <img class="click" src="./deps/save.ico" id="save" width="20" onclick="saveFile()"> 
+    </div> -->
+
+
+    <textarea id="input-box" cols="30" rows="10"></textarea>
+
+    <!-- ----------------------------------------------------------------------------------- -->
+    <!-- CodeMirror -->
+
+    <link rel="stylesheet" href="./deps/codemirror.css">
+    <link rel="stylesheet" href="./deps/foldgutter.css">
+    <!-- <link rel="stylesheet" href="./deps/gruvbox.css"> -->
+
+
+    <script src="./deps/codemirror.js"></script>
+
+    <script src="./deps/foldcode.js"></script>
+    <script src="./deps/foldgutter.js"></script>
+    <script src="./deps/markdown-fold.js"></script>
+
+    <script src="./deps/overlay.js"></script>
+    <script src="./deps/meta.js"></script>
+    <script src="./deps/markdown.js"></script>
+
+    <script src="./deps/xml.js"></script>
+    <script src="./deps/stex.js"></script>
+    <script src="./deps/yaml.js"></script>
+
+    <script src="./deps/javascript.js"></script>
+    <!-- load more for code blocks -->
+
+    <!-- ----------------------------------------------------------------------------------- -->
+    <!-- HyperMD -->
+
+    <link rel="stylesheet" href="./deps/hypermd.css">
+    <link rel="stylesheet" href="./deps/hypermd-light.css">
+    <link rel="stylesheet" href="./deps/gruvbox.css">
+
+
+    <script src="./deps/ai1.js"></script>
+
+    <!-- ----------------------------------------------------------------------------------- -->
+    <!-- KaTeX and hypermd-katex -->
+
+    <!-- Doesn't work for the font loading -->
+    <link rel="stylesheet" href="./deps/katex/katex.min.css">
+    <script src="./deps/katex/katex.min.js"></script>
+
+    
+    <script src="./deps/index.js"></script>
+    
+    <script src="./deps/deflate.js"></script>
+    <script src="./deps/simplemode.js"></script>
+    <script src="./deps/plantuml-highlight.js"></script>
+
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script> -->
+    <script src="./deps/plantuml.js"></script>
+    
+
+    <!-- ----------------------------------------------------------------------------------- -->
+    <!-- Let's ROCK -->
+
+    <script>
+
+      // import Split from 'split-grid'
+
+  // mermaid.initialize({ theme: "neutral" })
+
+
+      var myTextarea = document.getElementById('input-box')
+      myTextarea.textContent = localStorage.getItem("bloby")
+      var editor = HyperMD.fromTextArea(myTextarea, {
+        // for code fence highlighting
+        // theme: "gruvbox-dark"
+      //   hmdModeLoader: "https://cdn.jsdelivr.net/npm/codemirror/",
+      })
+
+      // and that's all
+      // now you get a `editor` and you can do whatever you want
+      editor.setSize("100%", "calc(100% - 24px)") // set height
+      editor.focus()
+    </script>
+  </body></noteditor>
+  <div class="gutter-col gutter-col-1"></div>
+
+  <div id="pane" style="  -webkit-app-region: none;">
+    hi dog
+
+    <button type="button" id="btn">Open a File</button>
+    File path: <strong id="filePath"></strong>
+
+  </div>
+
+</div>
+
+
+<script>
+
+Split({
+    columnGutters: [{
+        track: 1,
+        element: document.querySelector('.gutter-col-1'),
+    }],
+})
+
+
+const btn = document.getElementById('btn')
+const filePathElement = document.getElementById('filePath')
+
+btn.addEventListener('click', async () => {
+  const filePath = await window.electronAPI.openFile()
+  console.log(filePath)
+  filePathElement.innerText = filePath
+})
+
+// global state store with nanostores.
+pin.addEventListener('click', () => {
+  document.querySelector('.grid').style = "grid-template-columns: auto 2px 100px;"
+})
+
+
+
+console.log("hi", window.api)
+// ipcRenderer.invoke('get-files')
+console.log("hi ipcrednere-after")
+
+
+  document.body.onkeyup = function (e) {
+    localStorage.setItem("bloby", editor.getValue());
+  };
+</script>
+
+<script type="module" src="../src/renderer.ts"></script>
+
+
 </html>
