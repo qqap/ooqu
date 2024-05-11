@@ -1,59 +1,54 @@
-/**
- * This file will automatically be loaded by vite and run in the "renderer" context.
- * To learn more about the differences between the "main" and the "renderer" context in
- * Electron, visit:
- *
- * https://electronjs.org/docs/tutorial/application-architecture#main-and-renderer-processes
- *
- * By default, Node.js integration in this file is disabled. When enabling Node.js integration
- * in a renderer process, please be aware of potential security implications. You can read
- * more about security risks here:
- *
- * https://electronjs.org/docs/tutorial/security
- *
- * To enable Node.js integration in this file, open up `main.ts` and enable the `nodeIntegration`
- * flag:
- *
- * ```
- *  // Create the browser window.
- *  mainWindow = new BrowserWindow({
- *    width: 800,
- *    height: 600,
- *    webPreferences: {
- *      nodeIntegration: true
- *    }
- *  });
- * ```
- */
+////////////////////////////////////////////////
+/////////// Sidebar State Management ///////////
+////////////////////////////////////////////////
 
-// import './index.css';
 import { persistentAtom } from '@nanostores/persistent'
+
 type SidePaneStateValue = 'open' | 'closed'
-
 const $sidePaneState = persistentAtom<SidePaneStateValue>('open')
-
-
 const pin = document.querySelector<HTMLDivElement>('#pin')
-// console.log(pin)
-// global state store with nanostores.
+
 pin.addEventListener('click', () => {
     $sidePaneState.set($sidePaneState.value === 'open' ? 'closed' : 'open')
-    // console.log("clicked")
-    // console.log(document.querySelector<HTMLDivElement>('.grid').style.gridTemplateAreas)
-    // document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = "auto 2px 100px"
 })
 
 $sidePaneState.subscribe((value, oldValue) => {
     if (value === 'open') {
+        // NEED TO SAVE THE OPEN SIZE OF THE SIDEBAR, as a global value, 
+        // or something just to rememebbr
+        // just eventlisten when it changes, and store it as a STATE
+        // for persistant storage.
         document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = "auto 2px 200px"
     } else {
         document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = "auto 0px 0px"
     }
 })
 
-// console.log($loadingState)
+////////////////////////////////////////////////
+/////////// Editor State Management ////////////
+////////////////////////////////////////////////
 
-  
+import { persistentMap } from '@nanostores/persistent'
+
+export type editorStateValue = {
+  filename: string,
+  contents: string
+}
+
+export const $editorState = persistentMap<editorStateValue>('editorState', {
+  filename: '',
+  contents: ''
+})
+
+$editorState.listen((currentState, oldState, changedKey) => {
+    console.log(`${changedKey} new value ${currentState[changedKey]}`)
+})
+
+
+////////////////////////////////////////////////
+/////////// Sidepane Size Management ///////////
+////////////////////////////////////////////////
+
 const gutterdrag = document.querySelector<HTMLDivElement>('.gutter-col-1')
 const grid = document.querySelector<HTMLDivElement>('.grid')
 // console.log("gutterdrag", gutterdrag)
@@ -63,7 +58,7 @@ function move(){
     // transition hacks, need to be resolved.
     setTimeout(() => {
         // document.querySelector<HTMLDivElement>('.grid').style.transition = "300ms"
-        document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = "auto 2px 200px"
+        document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = "auto 2px 180px"
           }, 200)
 
  
@@ -128,12 +123,3 @@ gutterdrag.addEventListener('mousedown', (e) => {
   console.log('click');
 });
 
-
-
-
-// gutterdrag.addEventListener('dblclick', () => {
-//         console.log("double clicked")
-//     document.querySelector<HTMLDivElement>('.grid').style.gridTemplateAreas = "auto 2px 200px"
-// })
-
-console.log('👋 This message is being logged by "renderer.ts", included via Vite');
