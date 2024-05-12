@@ -12,25 +12,13 @@ let window: BrowserWindow;
 
 async function readPath(patha: string) {
   var filestoreturn: object[] = []
-
   const files = fs.readdirSync(patha, { withFileTypes: true })
-    
-  // , (err, files) => {
-  //                 // console.log(err, files)
-  //               
-  //                 console.log(filestoreturn)
-  //                 return filestoreturn
-
-  //               });
-
+  
   files.forEach(file => {
-    // console.log(file.isDirectory(), file.name)
     filestoreturn.push([file.isDirectory(), file.name])
-
   })
-  // console.log("hi", files)
-  return filestoreturn
 
+  return [filestoreturn, patha]
 }
 
 
@@ -103,6 +91,10 @@ app.whenReady().then(() => {
 
   ipcMain.handle('file:readFile', async (event, patha) => {
     return readFile(patha)
+  })
+
+  ipcMain.handle('file:readPath', async (event, patha) => {
+    return readPath(patha)
   })
   
   createWindow()

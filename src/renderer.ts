@@ -35,7 +35,7 @@ export type editorStateValue = {
   contents: string
 }
 
-document.addEventListener("click", function(e){
+document.addEventListener("click", async function(e){
     const target = e.target.closest(".filebtns"); // Or any other selector.
   
     if(target){
@@ -46,6 +46,24 @@ document.addEventListener("click", function(e){
     const dir = e.target.closest(".dirbtns")
     if (dir){
         console.log("dir", dir, e.target.closest(".dirdiv"))
+        const dirdiv = e.target.closest(".dirdiv");
+        const path = dir.getAttribute("path")
+        // NEEDS TO ABSTRACT TO FUNCTION
+        // SOME STATE MANAGEMENT ON OPEN DIRECTORIES?
+        const [allPaths, realPath] = await window.electronAPI.readPath(path)
+            allPaths.forEach(async (path) =>{
+            if (path[0] == true){
+                // filePathElement.innerHTML += "Directory " + path[1] + "<br>"
+                dirdiv.innerHTML += 
+                    `<div class="dirdiv"><button class="dirbtns" 
+                    path="${realPath}">dir ${path[1]}</button><div>`
+        
+                }
+            else{
+                dirdiv.innerHTML += 
+                    `<button class="filebtns">${path[1]}</button><br>`
+            }
+        });
     }
   });
 
@@ -93,33 +111,20 @@ const btn = document.getElementById('btn')
 const filePathElement = document.getElementById('filePath')
 
 btn.addEventListener('click', async () => {
+  filePathElement.innerHTML = ""
 
-// state mangagment, need to reset innerHTML
-filePathElement.innerHTML = ""
-
-
-  const allPaths = await window.electronAPI.openFile()
-//   console.log(filePath)
-  
+  const [allPaths, realPath] = await window.electronAPI.openFile()
     allPaths.forEach(async (path) =>{
-
     if (path[0] == true){
         // filePathElement.innerHTML += "Directory " + path[1] + "<br>"
-        filePathElement.innerHTML += `<div class="dirdiv"><button class="dirbtns">dir ${path[1]}</button><div>`
+        filePathElement.innerHTML +=
+            `<div class="dirdiv" style="background-color: blue"><button class="dirbtns" 
+            path="${realPath}/${path[1]}">dir ${path[1]}</button><div>`
 
         }
     else{
-
-        // console.log(await window.electronAPI.readFile(`${filePath}/${path[1]}`))
-
-        // button click trigger file change
-        // that will be used to render the file in the editor
-        // and we pull which button triggered it from the event.
         filePathElement.innerHTML += `<button class="filebtns">${path[1]}</button><br>`
     }
-    // filePathElement.innerText += path[0] + "\n" + path[1] + "\n"
-
-
   });
 })
 
