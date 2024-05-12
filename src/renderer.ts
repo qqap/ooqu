@@ -1,4 +1,24 @@
 ////////////////////////////////////////////////
+/////////// Editor CodeMirror Setup ////////////
+////////////////////////////////////////////////
+
+
+var myTextarea = document.querySelector<HTMLTextAreaElement>('#input-box')
+myTextarea.textContent = localStorage.getItem("bloby")
+var editor2 = HyperMD.fromTextArea(myTextarea, {
+  // for code fence highlighting
+  // theme: "gruvbox-dark"
+//   hmdModeLoader: "https://cdn.jsdelivr.net/npm/codemirror/",
+})
+
+// editor2.setValue("# cat in dog")
+
+// and that's all
+// now you get a `editor` and you can do whatever you want
+editor2.setSize("100%", "calc(100% - 24px)") // set height
+editor2.focus()
+
+////////////////////////////////////////////////
 /////////// Sidebar State Management ///////////
 ////////////////////////////////////////////////
 
@@ -29,6 +49,7 @@ $sidePaneState.subscribe((value, oldValue) => {
 ////////////////////////////////////////////////
 
 import { persistentMap } from '@nanostores/persistent'
+import { editor } from 'markzuck/notes/test/src/addon/_base'
 
 export type editorStateValue = {
   filename: string,
@@ -36,10 +57,18 @@ export type editorStateValue = {
 }
 
 document.addEventListener("click", async function(e){
+
     const target = e.target.closest(".filebtns"); // Or any other selector.
   
+
     if(target){
+
+        const path = target.getAttribute("path")
         $editorState.setKey('filename', target.innerText)
+        $editorState.setKey('contents', await window.electronAPI.readFile(path))
+        console.log("click", target)
+
+
       // Do something with `target`.
     }
 
@@ -56,12 +85,11 @@ document.addEventListener("click", async function(e){
                 // filePathElement.innerHTML += "Directory " + path[1] + "<br>"
                 dirdiv.innerHTML += 
                     `<div class="dirdiv"><button class="dirbtns" 
-                    path="${realPath}">dir ${path[1]}</button><div>`
+                    path="${realPath}/${path[1]}">dir ${path[1]}</button><div>`
         
                 }
             else{
-                dirdiv.innerHTML += 
-                    `<button class="filebtns">${path[1]}</button><br>`
+                dirdiv.innerHTML += `<button path="${realPath}/${path[1]}" class="filebtns">${path[1]}</button><br>`
             }
         });
     }
@@ -73,8 +101,8 @@ document.addEventListener("click", async function(e){
 // by themselves, and then update the editorState.
 
 export const $editorState = persistentMap<editorStateValue>('editorState', {
-  filename: '',
-  contents: ''
+  filename: '-',
+  contents: '-'
 })
 
 $editorState.listen((currentState, oldState, changedKey) => {
@@ -82,8 +110,15 @@ $editorState.listen((currentState, oldState, changedKey) => {
     if (changedKey === 'filename') {
         document.querySelector<HTMLDivElement>('#filenamepin').innerText = currentState[changedKey]
     }
-
     console.log(`${changedKey} new value ${currentState[changedKey]}`)
+
+    if (changedKey === 'contents') {
+        // console.log()
+        editor2.setValue(currentState[changedKey])
+        // editor2.setValue()
+        // document.querySelector<HTMLTextAreaElement>('#editor').value = currentState[changedKey]
+    }
+
 })
 
 
@@ -123,7 +158,7 @@ btn.addEventListener('click', async () => {
 
         }
     else{
-        filePathElement.innerHTML += `<button class="filebtns">${path[1]}</button><br>`
+        filePathElement.innerHTML += `<button path="${realPath}/${path[1]}" class="filebtns">${path[1]}</button><br>`
     }
   });
 })

@@ -152,7 +152,7 @@ h5 {
 
 
 <script src="./splitgrid.js"></script>
-<script>
+<!-- <script>
 
 
   function saveFile(){
@@ -163,7 +163,7 @@ h5 {
     a.click();
   }
 
-</script>
+</script> -->
 
 <div class="grid">
 
@@ -244,26 +244,13 @@ h5 {
     <!-- ----------------------------------------------------------------------------------- -->
     <!-- Let's ROCK -->
 
-    <script>
-
+    <!-- <script>
       // import Split from 'split-grid'
 
   // mermaid.initialize({ theme: "neutral" })
 
 
-      var myTextarea = document.getElementById('input-box')
-      myTextarea.textContent = localStorage.getItem("bloby")
-      var editor = HyperMD.fromTextArea(myTextarea, {
-        // for code fence highlighting
-        // theme: "gruvbox-dark"
-      //   hmdModeLoader: "https://cdn.jsdelivr.net/npm/codemirror/",
-      })
-
-      // and that's all
-      // now you get a `editor` and you can do whatever you want
-      editor.setSize("100%", "calc(100% - 24px)") // set height
-      editor.focus()
-    </script>
+    </script> -->
   </body></noteditor>
   <div class="gutter-col gutter-col-1"></div>
 
@@ -297,9 +284,9 @@ Split({
 // })
 
 
-  document.body.onkeyup = function (e) {
-    localStorage.setItem("bloby", editor.getValue());
-  };
+  // document.body.onkeyup = function (e) {
+  //   localStorage.setItem("bloby", editor.getValue());
+  // };
 </script>
 
 <script type="module" src="./src/renderer.ts"></script>
