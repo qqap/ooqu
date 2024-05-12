@@ -6,7 +6,7 @@ import { persistentAtom } from '@nanostores/persistent'
 
 type SidePaneStateValue = 'open' | 'closed'
 const $sidePaneState = persistentAtom<SidePaneStateValue>('open')
-const pin = document.querySelector<HTMLDivElement>('#pin')
+const pin = document.querySelector<HTMLDivElement>('#filenamepin')
 
 pin.addEventListener('click', () => {
     $sidePaneState.set($sidePaneState.value === 'open' ? 'closed' : 'open')
@@ -35,12 +35,36 @@ export type editorStateValue = {
   contents: string
 }
 
+document.addEventListener("click", function(e){
+    const target = e.target.closest(".filebtns"); // Or any other selector.
+  
+    if(target){
+        $editorState.setKey('filename', target.innerText)
+      // Do something with `target`.
+    }
+
+    const dir = e.target.closest(".dirbtns")
+    if (dir){
+        console.log("dir", dir, e.target.closest(".dirdiv"))
+    }
+  });
+
+// CONTENT TRIGGERS CONTENT CHANGE
+// FILENAME CHNAGE TRIGGERS FILENAME CHANGE
+// WHOEVER TRIES TO RENAME FILENAME, WILL NEED TO HANDLE THE filesystem rename
+// by themselves, and then update the editorState.
+
 export const $editorState = persistentMap<editorStateValue>('editorState', {
   filename: '',
   contents: ''
 })
 
 $editorState.listen((currentState, oldState, changedKey) => {
+
+    if (changedKey === 'filename') {
+        document.querySelector<HTMLDivElement>('#filenamepin').innerText = currentState[changedKey]
+    }
+
     console.log(`${changedKey} new value ${currentState[changedKey]}`)
 })
 
@@ -80,7 +104,9 @@ filePathElement.innerHTML = ""
     allPaths.forEach(async (path) =>{
 
     if (path[0] == true){
-        filePathElement.innerHTML += "Directory " + path[1] + "\n"
+        // filePathElement.innerHTML += "Directory " + path[1] + "<br>"
+        filePathElement.innerHTML += `<div class="dirdiv"><button class="dirbtns">dir ${path[1]}</button><div>`
+
         }
     else{
 
@@ -89,7 +115,7 @@ filePathElement.innerHTML = ""
         // button click trigger file change
         // that will be used to render the file in the editor
         // and we pull which button triggered it from the event.
-        filePathElement.innerHTML += `<button>${path[1]}</button>`
+        filePathElement.innerHTML += `<button class="filebtns">${path[1]}</button><br>`
     }
     // filePathElement.innerText += path[0] + "\n" + path[1] + "\n"
 
@@ -97,13 +123,6 @@ filePathElement.innerHTML = ""
   });
 })
 
-// let elementsArray = document.querySelectorAll("whatever");
-
-// elementsArray.forEach(function(elem) {
-//     elem.addEventListener("input", function() {
-//         // This function does stuff
-//     });
-// });
 
 
 let lastClick = 0;
