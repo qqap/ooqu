@@ -10,31 +10,38 @@ import { read } from 'original-fs';
 let window: BrowserWindow;
 
 
+async function readPath(patha: string) {
+  var filestoreturn: object[] = []
+
+  const files = fs.readdirSync(patha, { withFileTypes: true })
+    
+  // , (err, files) => {
+  //                 // console.log(err, files)
+  //               
+  //                 console.log(filestoreturn)
+  //                 return filestoreturn
+
+  //               });
+
+  files.forEach(file => {
+    // console.log(file.isDirectory(), file.name)
+    filestoreturn.push([file.isDirectory(), file.name])
+
+  })
+  // console.log("hi", files)
+  return filestoreturn
+
+}
+
+
 async function handleFileOpen () {
   const { canceled, filePaths } = await dialog.showOpenDialog(window, {properties: ['openDirectory']})
   // console.log("handleFileOpen", filePaths)
 
   if (!canceled) {
-    var filestoreturn: object[] = []
-
+    return readPath(filePaths[0])
     // use fs.readdir to read the files in the directory
-    const files = fs.readdirSync(filePaths[0], { withFileTypes: true })
-    
-    // , (err, files) => {
-    //                 // console.log(err, files)
-    //               
-    //                 console.log(filestoreturn)
-    //                 return filestoreturn
 
-    //               });
-
-    files.forEach(file => {
-      // console.log(file.isDirectory(), file.name)
-      filestoreturn.push([file.isDirectory(), file.name])
-
-    })
-    // console.log("hi", files)
-    return [filestoreturn, filePaths[0]]
 
 
   }

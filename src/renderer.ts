@@ -98,7 +98,7 @@ btn.addEventListener('click', async () => {
 filePathElement.innerHTML = ""
 
 
-  const [allPaths, filePath] = await window.electronAPI.openFile()
+  const allPaths = await window.electronAPI.openFile()
 //   console.log(filePath)
   
     allPaths.forEach(async (path) =>{
@@ -110,7 +110,7 @@ filePathElement.innerHTML = ""
         }
     else{
 
-        console.log(await window.electronAPI.readFile(`${filePath}/${path[1]}`))
+        // console.log(await window.electronAPI.readFile(`${filePath}/${path[1]}`))
 
         // button click trigger file change
         // that will be used to render the file in the editor
