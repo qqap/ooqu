@@ -76,22 +76,32 @@ document.addEventListener("click", async function(e){
     if (dir){
         console.log("dir", dir, e.target.closest(".dirdiv"))
         const dirdiv = e.target.closest(".dirdiv");
-        const path = dir.getAttribute("path")
-        // NEEDS TO ABSTRACT TO FUNCTION
-        // SOME STATE MANAGEMENT ON OPEN DIRECTORIES?
-        const [allPaths, realPath] = await window.electronAPI.readPath(path)
-            allPaths.forEach(async (path) =>{
-            if (path[0] == true){
-                // filePathElement.innerHTML += "Directory " + path[1] + "<br>"
-                dirdiv.innerHTML += 
-                    `<div class="dirdiv"><nodebutton class="dirbtns" 
-                    path="${realPath}/${path[1]}">dir ${path[1]}</nodebutton><div>`
-        
-                }
-            else{
-                dirdiv.innerHTML += `<nodebutton path="${realPath}/${path[1]}" class="filebtns">${path[1]}</nodebutton>`
-            }
-        });
+        if (dirdiv.getAttribute("open") == "true"){
+          dirdiv.setAttribute("open", false)
+          dirdiv.removeChild(dirdiv.querySelector("#contents"))
+        } else {
+          var folderContents = document.createElement("foldercontent");
+          folderContents.id = "contents"
+          dirdiv.appendChild(folderContents)
+
+
+          dirdiv.setAttribute("open", true);
+          const path = dir.getAttribute("path")
+          // NEEDS TO ABSTRACT TO FUNCTION
+          // SOME STATE MANAGEMENT ON OPEN DIRECTORIES?
+          const [allPaths, realPath] = await window.electronAPI.readPath(path)
+              allPaths.forEach(async (path) =>{
+              if (path[0] == true){
+                  // filePathElement.innerHTML += "Directory " + path[1] + "<br>"
+                  folderContents.innerHTML += 
+                      `<div class="dirdiv"><nodebutton class="dirbtns" style="color: wheat"
+                      path="${realPath}/${path[1]}">dir ${path[1]}</nodebutton><div>`
+                  }
+              else{
+                  folderContents.innerHTML += `<nodebutton path="${realPath}/${path[1]}" class="filebtns">${path[1]}</nodebutton>`
+              }
+          });
+      }
     }
   });
 
@@ -154,7 +164,7 @@ btn.addEventListener('click', async () => {
     if (path[0] == true){
         // filePathElement.innerHTML += "Directory " + path[1] + "<br>"
         filePathElement.innerHTML +=
-            `<div class="dirdiv"><nodebutton class="dirbtns" style="color: blue"
+            `<div class="dirdiv"><nodebutton class="dirbtns" style="color: wheat"
             path="${realPath}/${path[1]}">dir ${path[1]}</nodebutton><div>`
 
         }
