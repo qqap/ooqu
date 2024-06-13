@@ -38,10 +38,10 @@ async function handleFileOpen () {
 
 
 async function readFile(patha: string) {
-  console.log("readFile path", path)
+  // console.log("readFile path", path)
 
   const data = fs.readFileSync(patha, 'utf8')
-  console.log("readFile data", data)
+  // console.log("readFile data", data)
   return data
 
   

@@ -95,7 +95,7 @@ document.addEventListener("click", async function(e){
                   // filePathElement.innerHTML += "Directory " + path[1] + "<br>"
                   folderContents.innerHTML += 
                       `<div class="dirdiv"><nodebutton class="dirbtns" style="color: wheat"
-                      path="${realPath}/${path[1]}">dir ${path[1]}</nodebutton><div>`
+                      path="${realPath}/${path[1]}">> ${path[1]}</nodebutton><div>`
                   }
               else{
                   folderContents.innerHTML += `<nodebutton path="${realPath}/${path[1]}" class="filebtns">${path[1]}</nodebutton>`
@@ -154,9 +154,9 @@ function move(){
 
 const btn = document.getElementById('btn')
 const filePathElement = document.getElementById('filePath')
-filePathElement.innerHTML = "<nodebutton>${path[1]}</nodebutton>"
 
 btn.addEventListener('click', async () => {
+  btn.innerHTML = ""
   filePathElement.innerHTML = ""
 
   const [allPaths, realPath] = await window.electronAPI.openFile()
@@ -165,7 +165,7 @@ btn.addEventListener('click', async () => {
         // filePathElement.innerHTML += "Directory " + path[1] + "<br>"
         filePathElement.innerHTML +=
             `<div class="dirdiv"><nodebutton class="dirbtns" style="color: wheat"
-            path="${realPath}/${path[1]}">dir ${path[1]}</nodebutton><div>`
+            path="${realPath}/${path[1]}">> ${path[1]}</nodebutton><div>`
 
         }
     else{
