@@ -84,12 +84,12 @@ document.addEventListener("click", async function(e){
             if (path[0] == true){
                 // filePathElement.innerHTML += "Directory " + path[1] + "<br>"
                 dirdiv.innerHTML += 
-                    `<div class="dirdiv"><button class="dirbtns" 
-                    path="${realPath}/${path[1]}">dir ${path[1]}</button><div>`
+                    `<div class="dirdiv"><nodebutton class="dirbtns" 
+                    path="${realPath}/${path[1]}">dir ${path[1]}</nodebutton><div>`
         
                 }
             else{
-                dirdiv.innerHTML += `<button path="${realPath}/${path[1]}" class="filebtns">${path[1]}</button><br>`
+                dirdiv.innerHTML += `<nodebutton path="${realPath}/${path[1]}" class="filebtns">${path[1]}</nodebutton>`
             }
         });
     }
@@ -144,6 +144,7 @@ function move(){
 
 const btn = document.getElementById('btn')
 const filePathElement = document.getElementById('filePath')
+filePathElement.innerHTML = "<nodebutton>${path[1]}</nodebutton>"
 
 btn.addEventListener('click', async () => {
   filePathElement.innerHTML = ""
@@ -153,12 +154,12 @@ btn.addEventListener('click', async () => {
     if (path[0] == true){
         // filePathElement.innerHTML += "Directory " + path[1] + "<br>"
         filePathElement.innerHTML +=
-            `<div class="dirdiv" style="background-color: blue"><button class="dirbtns" 
-            path="${realPath}/${path[1]}">dir ${path[1]}</button><div>`
+            `<div class="dirdiv"><nodebutton class="dirbtns" style="color: blue"
+            path="${realPath}/${path[1]}">dir ${path[1]}</nodebutton><div>`
 
         }
     else{
-        filePathElement.innerHTML += `<button path="${realPath}/${path[1]}" class="filebtns">${path[1]}</button><br>`
+        filePathElement.innerHTML += `<nodebutton path="${realPath}/${path[1]}" class="filebtns">${path[1]}</nodebutton>`
     }
   });
 })
