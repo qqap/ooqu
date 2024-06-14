@@ -6,6 +6,8 @@
 var myTextarea = document.querySelector<HTMLTextAreaElement>('#input-box')
 myTextarea.textContent = localStorage.getItem("bloby")
 var editor2 = HyperMD.fromTextArea(myTextarea, {
+  lineWrapping: true,
+
   // for code fence highlighting
   // theme: "gruvbox-dark"
 //   hmdModeLoader: "https://cdn.jsdelivr.net/npm/codemirror/",
