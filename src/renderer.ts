@@ -4,7 +4,7 @@
 
 
 var myTextarea = document.querySelector<HTMLTextAreaElement>('#input-box')
-myTextarea.textContent = localStorage.getItem("bloby")
+// myTextarea.textContent = localStorage.getItem("bloby")
 var editor2 = HyperMD.fromTextArea(myTextarea, {
   lineWrapping: true,
 
@@ -13,7 +13,7 @@ var editor2 = HyperMD.fromTextArea(myTextarea, {
 //   hmdModeLoader: "https://cdn.jsdelivr.net/npm/codemirror/",
 })
 
-editor2.setValue("")
+// editor2.setValue("")
 
 // and that's all
 // now you get a `editor` and you can do whatever you want
