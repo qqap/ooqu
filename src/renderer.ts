@@ -50,14 +50,17 @@ document.addEventListener('keyup', () => {
     window.electronAPI.writeFile($editorState.get().path, editor2.getValue())
 })
 
+var savedGridTemplateColumns = "auto 2px 200px"
+
 $sidePaneState.subscribe((value, oldValue) => {
     if (value === 'open') {
         // NEED TO SAVE THE OPEN SIZE OF THE SIDEBAR, as a global value, 
         // or something just to rememebbr
         // just eventlisten when it changes, and store it as a STATE
         // for persistant storage.
-        document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = "auto 2px 200px"
+        document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = savedGridTemplateColumns
     } else {
+        savedGridTemplateColumns = document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns 
         document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = "auto 0px 0px"
     }
 })
