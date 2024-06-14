@@ -17,12 +17,12 @@ nodebutton {
   color: white;
   width: fit-content;
   padding: 4px 8px 4px 8px;
-  margin-top: 2px;
+  /* margin-top: 2px; */
   margin-left: 4px;
-  margin-bottom: 2px;
+  /* margin-bottom: 2px; */
   font-family: Vercetti;
   user-select: none;
-
+  -webkit-app-region: no-drag;
   /* text-align: center; */
 }
 
@@ -194,7 +194,7 @@ h5 {
     <div style="height: 24px; display: flex; justify-content: end; padding-right: 10px;">
       <span id="filenamepin" style="color: rgb(109, 102, 102); 
       font-family: Vercetti; font-size: small;
-      padding-top: 4px; cursor: pointer;">*</span>
+      padding-top: 4px; cursor: pointer;"></span>
     </div>
     
    
@@ -277,7 +277,7 @@ h5 {
   </body></noteditor>
   <div class="gutter-col gutter-col-1"></div>
 
-  <div id="pane" style=" overflow-y:auto; max-height: calc(100vh - 24px);  -webkit-app-region: none; ">
+  <div id="pane" style=" overflow-y:auto; max-height: calc(100vh - 24px); ">
 
     <nodebutton type="button" id="btn">Open a Folder</nodebutton>
     <strong id="filePath"></strong>

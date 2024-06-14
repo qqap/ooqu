@@ -34,6 +34,18 @@ pin.addEventListener('click', () => {
     $sidePaneState.set($sidePaneState.value === 'open' ? 'closed' : 'open')
 })
 
+// const pane = document.querySelector<HTMLDivElement>('#pane')
+// pane.addEventListener('mousedown', () => {
+//   console.log('mousedown')
+//   pane.style = "overflow-y:auto; max-height: calc(100vh - 24px);  -webkit-app-region: drag; "
+//   pane.addEventListener('mouseup', () => {
+//     console.log('mouseup')
+//     pane.style = "overflow-y:auto; max-height: calc(100vh - 24px);  -webkit-app-region: none; "
+//   })
+// })
+
+
+
 document.addEventListener('keyup', () => {
     window.electronAPI.writeFile($editorState.get().path, editor2.getValue())
 })
