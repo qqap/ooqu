@@ -290,7 +290,7 @@ export class TokenSeeker {
 
     if (precise || !sameLine) {
       this.line = line
-      this.lineNo = line.lineNo()
+      this.lineNo = 0
       this.lineTokens = this.cm.getLineTokens(this.lineNo)
     } else {
       // try to speed-up seeking

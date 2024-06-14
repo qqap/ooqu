@@ -5,7 +5,7 @@
   "main": "./everything.js",
   "types": "./everything.d.ts",
   "scripts": {
-    "build": "node dev/build-all.js && cp ai1.js ../../editor/deps && cp mode/hypermd.css ../../editor/deps && cp theme/hypermd-light.css ../../editor/deps",
+    "build": "node dev/build-all.js && cp ai1.js ../../public && cp mode/hypermd.css ../../public && cp theme/hypermd-light.css ../../public",
     "prebuild_js": "node dev/pre-build.js",
     "build_js": "tsc && rollup -c",
     "postbuild_js": "node dev/post-build.js",
