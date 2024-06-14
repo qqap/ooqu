@@ -50,7 +50,7 @@ document.addEventListener('keyup', () => {
     window.electronAPI.writeFile($editorState.get().path, editor2.getValue())
 })
 
-var savedGridTemplateColumns = "auto 2px 200px"
+var savedGridTemplateColumns = persistentAtom("auto 2px 200px")
 
 $sidePaneState.subscribe((value, oldValue) => {
     if (value === 'open') {
@@ -58,9 +58,9 @@ $sidePaneState.subscribe((value, oldValue) => {
         // or something just to rememebbr
         // just eventlisten when it changes, and store it as a STATE
         // for persistant storage.
-        document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = savedGridTemplateColumns
+        document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = savedGridTemplateColumns.get()
     } else {
-        savedGridTemplateColumns = document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns 
+        savedGridTemplateColumns.set(document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns)
         document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = "auto 0px 0px"
     }
 })
@@ -140,7 +140,9 @@ export const $editorState = persistentMap<editorStateValue>('editorState', {
   path: ''
 })
 
-$editorState.listen((currentState, oldState, changedKey) => {
+// console.log($editorState.get())
+
+$editorState.subscribe((currentState, oldState, changedKey) => {
 
     if (changedKey === 'filename') {
         document.querySelector<HTMLDivElement>('#filenamepin').innerText = currentState[changedKey]
