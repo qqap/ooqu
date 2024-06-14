@@ -58,9 +58,16 @@ $sidePaneState.subscribe((value, oldValue) => {
         // or something just to rememebbr
         // just eventlisten when it changes, and store it as a STATE
         // for persistant storage.
+       
         document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = savedGridTemplateColumns.get()
+
     } else {
-        savedGridTemplateColumns.set(document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns)
+
+        const toSave = document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns
+        if (toSave !== "" && toSave !== "auto 0px 0px") {
+          console.log("saved", toSave)
+          savedGridTemplateColumns.set(toSave)
+        }
         document.querySelector<HTMLDivElement>('.grid').style.gridTemplateColumns = "auto 0px 0px"
     }
 })
