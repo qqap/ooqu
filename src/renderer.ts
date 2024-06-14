@@ -13,7 +13,7 @@ var editor2 = HyperMD.fromTextArea(myTextarea, {
 //   hmdModeLoader: "https://cdn.jsdelivr.net/npm/codemirror/",
 })
 
-// editor2.setValue("# cat in dog")
+editor2.setValue("")
 
 // and that's all
 // now you get a `editor` and you can do whatever you want
@@ -194,7 +194,7 @@ gutterdrag.addEventListener('mousedown', (e) => {
     // console.log('click', e)
   const thisClick = Date.now();
   if (thisClick - lastClick < 400) {
-    console.log('quick click detected, returning early');
+    // console.log('quick click detected, returning early');
     move()
     lastClick = thisClick;
     // return;
