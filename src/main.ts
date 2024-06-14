@@ -9,13 +9,22 @@ import { read } from 'original-fs';
 
 let window: BrowserWindow;
 
+const { globalShortcut } = require('electron');
+
 
 async function readPath(patha: string) {
   var filestoreturn: object[] = []
   const files = fs.readdirSync(patha, { withFileTypes: true })
   
-  files.forEach(file => {
-    filestoreturn.push([file.isDirectory(), file.name])
+  var sortedfiles = files.map(fileName => ({
+    name: fileName.name,
+    file: fileName,
+    time: fs.statSync(`${patha}/${fileName.name}`).mtime.getTime(),
+  }))
+  .sort((a, b) => b.time - a.time)
+
+  sortedfiles.forEach(file => {
+    filestoreturn.push([file.file.isDirectory(), file.file.name])
   })
 
   return [filestoreturn, patha]
@@ -112,6 +121,15 @@ app.whenReady().then(() => {
 
 
 })
+
+app.on('browser-window-focus', function () {
+  globalShortcut.register("CommandOrControl+R", () => {
+      console.log("CommandOrControl+R is pressed: Shortcut Disabled");
+  });
+  globalShortcut.register("F5", () => {
+      console.log("F5 is pressed: Shortcut Disabled");
+  });
+});
 
 
 // Quit when all windows are closed, except on macOS. There, it's common
