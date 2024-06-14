@@ -23,12 +23,19 @@ nodebutton {
   font-family: Vercetti;
   user-select: none;
   -webkit-app-region: no-drag;
+  transform: scale(1); /* you need a scale here to allow it to transition in both directions */
+  transition: 0.15s all ease;
   /* text-align: center; */
 }
 
 nodebutton:hover {
   background-color: rgba(255, 255, 255, 0.115);
   cursor: pointer;
+}
+
+nodebutton:active {
+  transform: scale(0.94);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .grid {
@@ -191,10 +198,10 @@ h5 {
 <div class="grid">
 
   <noteditor id="editor"><body>
-    <div style="height: 24px; display: flex; justify-content: end; padding-right: 10px;">
+    <div style="height: 24px; display: flex; justify-content: end; padding-right: 10px; -webkit-app-region: drag;">
       <span id="filenamepin" style="color: rgb(109, 102, 102); 
       font-family: Vercetti; font-size: small;
-      padding-top: 4px; cursor: pointer;"></span>
+      padding-top: 4px; cursor: pointer; -webkit-app-region: no-drag;">aaa</span>
     </div>
     
    
