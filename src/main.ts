@@ -47,6 +47,9 @@ async function readFile(patha: string) {
   
 }
 
+async function writeFile(patha: string, data: string){
+  fs.writeFileSync(patha, data)
+}
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -91,6 +94,10 @@ app.whenReady().then(() => {
 
   ipcMain.handle('file:readFile', async (event, patha) => {
     return readFile(patha)
+  })
+
+  ipcMain.handle('file:writeFile', async (event, patha, data) => {
+    return writeFile(patha, data)
   })
 
   ipcMain.handle('file:readPath', async (event, patha) => {

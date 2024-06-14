@@ -14,6 +14,6 @@ const { contextBridge, ipcRenderer } = require('electron/renderer')
 contextBridge.exposeInMainWorld('electronAPI', {
   openFile: () => ipcRenderer.invoke('dialog:openFile'),
   readFile: patha => ipcRenderer.invoke('file:readFile', patha),
-  readPath: patha => ipcRenderer.invoke('file:readPath', patha)
-
+  readPath: patha => ipcRenderer.invoke('file:readPath', patha),
+  writeFile: (patha, data) => ipcRenderer.invoke('file:writeFile', patha, data)
 })

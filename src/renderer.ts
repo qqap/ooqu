@@ -34,6 +34,10 @@ pin.addEventListener('click', () => {
     $sidePaneState.set($sidePaneState.value === 'open' ? 'closed' : 'open')
 })
 
+document.addEventListener('keyup', () => {
+    window.electronAPI.writeFile($editorState.get().path, editor2.getValue())
+})
+
 $sidePaneState.subscribe((value, oldValue) => {
     if (value === 'open') {
         // NEED TO SAVE THE OPEN SIZE OF THE SIDEBAR, as a global value, 
@@ -52,10 +56,12 @@ $sidePaneState.subscribe((value, oldValue) => {
 
 import { persistentMap } from '@nanostores/persistent'
 import { editor } from 'markzuck/notes/test/src/addon/_base'
+import { writeFile } from 'original-fs'
 
 export type editorStateValue = {
   filename: string,
-  contents: string
+  contents: string,
+  path: string
 }
 
 document.addEventListener("click", async function(e){
@@ -67,8 +73,9 @@ document.addEventListener("click", async function(e){
 
         const path = target.getAttribute("path")
         $editorState.setKey('filename', target.innerText)
+        $editorState.setKey('path', path)
         $editorState.setKey('contents', await window.electronAPI.readFile(path))
-        console.log("click", target)
+        // console.log("click", target)
 
 
       // Do something with `target`.
@@ -114,7 +121,8 @@ document.addEventListener("click", async function(e){
 
 export const $editorState = persistentMap<editorStateValue>('editorState', {
   filename: '-',
-  contents: '-'
+  contents: '-',
+  path: '-'
 })
 
 $editorState.listen((currentState, oldState, changedKey) => {
