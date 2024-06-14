@@ -122,7 +122,7 @@ document.addEventListener("click", async function(e){
 export const $editorState = persistentMap<editorStateValue>('editorState', {
   filename: '-',
   contents: '-',
-  path: '-'
+  path: ''
 })
 
 $editorState.listen((currentState, oldState, changedKey) => {
@@ -166,7 +166,7 @@ const btn = document.getElementById('btn')
 const filePathElement = document.getElementById('filePath')
 
 btn.addEventListener('click', async () => {
-  btn.innerHTML = ""
+  btn.remove()
   filePathElement.innerHTML = ""
 
   const [allPaths, realPath] = await window.electronAPI.openFile()
