@@ -129,7 +129,7 @@ document.addEventListener("click", async function(e){
                       path="${realPath}/${path[1]}">> ${path[1]}</nodebutton><div>`
                   }
               else{
-                  folderContents.innerHTML += `<nodebutton path="${realPath}/${path[1]}" class="filebtns">${path[1]}</nodebutton>`
+                  folderContents.innerHTML += `<nodebutton path="${realPath}/${path[1]}" class="filebtns">${path[1].replace(".md", "")}</nodebutton>`
               }
           });
       }
@@ -203,7 +203,7 @@ btn.addEventListener('click', async () => {
 
         }
     else{
-        filePathElement.innerHTML += `<nodebutton path="${realPath}/${path[1]}" class="filebtns">${path[1]}</nodebutton>`
+        filePathElement.innerHTML += `<nodebutton path="${realPath}/${path[1]}" class="filebtns">${path[1].replace(".md", "")}</nodebutton>`
     }
   });
 })
